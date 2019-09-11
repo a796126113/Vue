@@ -1,0 +1,88 @@
+<html>
+    <body>
+        <div id="app">
+            {{ message }}
+
+            <a :href="imgWeb"><img :src="imgUrl"></a>
+            <h1>===================================</h1>
+            <span v-html="content"></span>
+            <h1>===================================</h1>
+            <input placeholder="Enter Name" v-model="strName"><br>
+            Name is:{{strName}}
+            <h1>===================================</h1>
+            <input placeholder="Enter Number" v-model="num"><br>
+            <span v-if="num === 0">請輸入數字!</span>
+            <span v-else-if="num % 2 == 0">偶數</span>
+            <span v-else>奇數</span>
+            <span v-if="num == 0"></span>
+            <span v-else-if="num > randomNum">太大</span>
+            <span v-else-if="num < randomNum">太小</span>
+            <span v-else><span v-html="content"></span></span>
+            <h1>===================================</h1>
+            <ul v-for="(colors,index) in ['red','blue','green']">
+                <!--<li :style=styleObject>{{color}}</li>-->
+                <li><font v-bind:color="colors" >{{colors}}</font></li>
+            </ul>
+            <h1>===================================</h1>
+            <table border="1" >
+                <tr v-for="product in products">
+                    <td>{{product.details[0]}}</td>
+                    <td>${{product.details[1]}}</td>    
+                    <td>
+                        <!--<img :src="product.details[2]">-->
+                        <img :src="product.details[2]" width="50" height="50">
+                    </td>    
+                </tr>
+            </table>
+            <h1>===================================</h1>
+            <table border="1">
+                <tr v-for="tr in [1,2,3,4,5,6,7,8,9]">
+                    <td v-for="td in [1,2,3,4,5,6,7,8,9]">
+                        {{tr}}*{{td}}={{tr*td}}
+                    </td>
+                </tr>
+            </table>           
+        </div>
+
+    </body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var uuu = "https://i2.bahamut.com.tw/baha_logo5.png";
+    var random = Number.parseInt(Math.random()*100+1);
+    console.log(random)
+    var v = new Vue({
+        el : '#app',
+        data : {
+            message : 'helloWorld',
+            imgUrl : uuu,
+            imgWeb : 'https://vuejs.org/',
+            content : '<span style=color:red>BINGO</span>',
+            strName : '',
+            num : '',
+            randomNum : random,
+            styleObject : {
+                color : 'red',
+                fontSize : '30px'
+            },
+            products : [
+                    {
+                        details :['ASUS VivoBook S14 S430UN-0031B8250U 炫耀紅', '39,999', 'https://b.ecimg.tw/img/h24/v1/layout/onsale/20190910/20190906150549_1-1-640x640.jpg']
+                    },
+                    {
+                        details :['富士 FUJIFILM X-T100 15-45mm KIT組 公司貨', '19,999', 'https://e.ecimg.tw/img/h24/v1/layout/onsale/20190910/20190906112256_1-9-640x640.jpg']
+                    },
+                    {
+                        details :['WONDER旺德 拍照翻譯機 WM-T168W', '4,999', 'https://f.ecimg.tw/img/h24/v1/layout/onsale/20190910/20190906154427_1-20-640x640.jpg']
+                    },
+                    {
+                        details :['X9 Pro藍牙5.0雙耳通話指紋觸控無線運動耳機', '1,099', 'https://c.ecimg.tw/img/h24/v1/layout/onsale/20190910/20190909135212_1-32-640x640.jpg']
+                    },
+            ] 
+
+        },
+
+    });
+</script>
+</html>
