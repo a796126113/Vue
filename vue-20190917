@@ -1,0 +1,129 @@
+<html>
+    <body>
+        <div id="app">
+            {{message}}
+            {{title}}
+            <a :href="target"><img :src="imgUrl"></a>
+            <span v-html="content"></span>
+            <h1>--------------------------</h1>
+            <input placeholder="Enter name" v-model="qty"><br>
+            Name is : 
+            <p v-if="qty > num">太大</p>
+            <p v-else-if="qty < num">太小</p>
+            <p v-else>bingo</p>
+
+            <p v-if="qty >= 10">還有數量</p>
+            <p v-else-if="qty < 10 && qty > 0">手腳要快</p>
+            <p v-else>已賣光</p>
+            <h1>--------------------------</h1>
+            <ul v-for="(c,index) in item">
+                <li :style="styleObject" >{{index}}{{c}}</li>
+            </ul>
+            <img :src="img2" width="300" height="300">
+            <h1>--------------------------</h1>
+            <table border="1" >
+                <tr v-for="(product,index) in products">
+                    <td>{{product.details[0]}}</td>
+                    <td>${{product.details[1]}}
+                        <button @click="add(count,product.details[1],product.details[3])">addCart</button></td>    
+                    <td>
+                        <!--<img :src="product.details[2]">-->
+                        <img :src="'https://'+product.details[2]" width="50" height="50" @mouseover="showImg(product.details[2])">
+                    </td> 
+                    <td :id="stock + index">庫存:{{product.details[3]}}</td> 
+                </tr>
+            </table>
+            <button @click="add()">{{count}} </button><button>{{money}}</button>
+            <h1>===================================</h1>
+            <table border="1">
+                <tr v-for="tr in [1,2,3,4,5,6,7,8,9]">
+                    <td v-for="td in [1,2,3,4,5,6,7,8,9]">
+                        {{tr}}*{{td}}={{tr*td}}
+                    </td>
+                </tr>
+            </table> 
+            <!-- {{hello(2)}} -->
+            <!-- {{bye(3)}} -->
+            <h1>===================================</h1>
+            <button @click="posts()">axios</button>
+            <ul v-for="p in posts">
+                {{p}}
+            </ul>
+            <h1>===================================</h1>
+
+        </div>
+        
+
+        <script src="https://unpkg.com/vue@2.4.4/dist/vue.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script>
+            var v = new Vue({
+                el : '#app',
+                data : {
+                    message : 'helloWorld',
+                    title : 'Vue',
+                    imgUrl : 'https://vuejs.org/images/logo.png',
+                    target : 'https://vuejs.org',
+                    content : '<span style=color:red>this is a sentanse</span>',
+                    qty : 0,
+                    num : parseInt(Math.random() * 100 + 1),
+                    item : ['red', 'blue', 'green'],
+                    count : 0,
+                    money : 0,
+                    stock : 0,
+                    img2 : '',
+                    posts : [],
+                    products : [
+                        {
+                            details :['ASUS VivoBook S14 S430UN-0031B8250U 炫耀紅', '39,999', 'b.ecimg.tw/img/h24/v1/layout/onsale/20190910/20190906150549_1-1-640x640.jpg',2]
+                        },
+                        {
+                            details :['富士 FUJIFILM X-T100 15-45mm KIT組 公司貨', '19,999', 'e.ecimg.tw/img/h24/v1/layout/onsale/20190910/20190906112256_1-9-640x640.jpg',3]
+                        },
+                        {
+                            details :['WONDER旺德 拍照翻譯機 WM-T168W', '4,999', 'f.ecimg.tw/img/h24/v1/layout/onsale/20190910/20190906154427_1-20-640x640.jpg',4]
+                        },
+                        {
+                            details :['X9 Pro藍牙5.0雙耳通話指紋觸控無線運動耳機', '1,099', 'c.ecimg.tw/img/h24/v1/layout/onsale/20190910/20190909135212_1-32-640x640.jpg',5]
+                        },
+                    ],         
+                    styleObject : {
+                        color : 'red',
+                        fontSize : '30px',
+                    }
+                    
+                },
+                methods: {
+                    hello (x){
+                        for(var i = 0; i < x; i++){
+                            alert('Vue-' + i);
+                        }
+                        
+                    },
+                    bye (x){
+                        alert('bye-'+x);
+                    },
+                    add(count,money,stock){
+                        console.log(stock);
+                        
+                        money = money.replace(',','');
+                        this.money += parseInt(money); 
+                        this.count++;
+                    },
+                    showImg(imgUrl){
+                        this.img2 = 'https://' + imgUrl;
+                    },
+                    posts(){
+                       axios.get('http://jsonplaceholder.typicode.com/posts')
+                    //    .then(response => {this.posts = response.data})
+                       .then(response => {console.log(response.data)})
+                       .catch(error => {console.log(error);}) 
+                    },
+
+                },
+            });
+
+             
+        </script>
+    </body>    
+</html>
